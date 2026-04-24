@@ -1,0 +1,99 @@
+{% extends 'student/base1.html' %}
+
+{% block title %}Sign Up - OneCampus{% endblock %}
+
+{% block content %}
+    <section class="min-h-screen flex items-center justify-center py-20">
+        <div class="max-w-md w-full mx-auto">
+            <div class="gradient-border">
+                <div class="p-8">
+                    <h2 class="text-3xl font-bold text-gradient mb-8 text-center">Sign Up</h2>
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+                        <div class="space-y-4">
+                            {% for field in form %}
+                                <div class="relative">
+                                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">
+                                        {{ field.label }}
+                                    </label>
+                                    <div class="relative">
+                                        {{ field }}
+                                        {% if "password" in field.name %}
+                                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onclick="togglePassword('{{ field.id_for_label }}')">
+                                                <i id="password-toggle-icon-{{ field.id_for_label }}" class="fas fa-eye text-primary"></i>
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    {% if field.errors %}
+                                        <p class="text-red-500 text-sm mt-1">{{ field.errors.as_text }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="cta-button w-full px-6 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            Sign Up
+                        </button>
+                    </form>
+                    <p class="mt-4 text-center text-slate-600 dark:text-slate-400">
+                        Already have an account? <a href="{% url 'login' %}" class="text-primary hover:underline">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript for Password Toggle -->
+    <script>
+        function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const toggleIcon = document.getElementById(`password-toggle-icon-${fieldId}`);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
+
+    <!-- Custom Styles for Form Fields -->
+    <style>
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1F2937;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .dark input[type="text"],
+        .dark input[type="email"],
+        .dark input[type="password"] {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: rgba(139, 92, 246, 0.3);
+            color: #F3F4F6;
+        }
+
+        .dark input[type="text"]:focus,
+        .dark input[type="email"]:focus,
+        .dark input[type="password"]:focus {
+            border-color: #7C3AED;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+    </style>
+{% endblock %}

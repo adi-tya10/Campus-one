@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" {% if request.user.is_authenticated %}class="light"{% endif %}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}OneCampus - Student Management System{% endblock %}</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        'primary-dark': '#7C3AED',
+                        secondary: '#06B6D4',
+                        'secondary-dark': '#0891B2',
+                        dark: {
+                            bg: '#0F172A',
+                            text: '#F3F4F6'
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        .text-gradient {
+            background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .glass-card {
+        perspective: blur(10px);
+        border: 1px solid rgba(139, 92, 246, 0.1);
+    }
+
+    .dark .glass-card {
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    nav{
+        background-color: white
+    }
+
+    .nav-link {
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: linear-gradient(90deg, #8B5CF6, #06B6D4);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .feature-card {
+        border: 1px solid rgba(139, 92, 246, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(6, 182, 212, 0.05));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+        opacity: 1;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
+        border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .dark .feature-card {
+        border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .dark .feature-card::before {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+    }
+
+    .dark .feature-card:hover {
+        box-shadow: 0 4px 20px rgba(139, 92, 246, 0.25);
+        border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .gradient-border {
+        position: relative;
+        background: linear-gradient(135deg, #8B5CF6, #06B6D4);
+        padding: 1px;
+        border-radius: 1rem;
+    }
+
+    .gradient-border > div {
+        background: white;
+        border-radius: 1rem;
+    }
+
+    .dark .gradient-border > div {
+        background: #0F172A;
+    }
+
+    .icon-wrapper {
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .icon-wrapper {
+        transform: scale(1.1);
+    }
+
+    .icon-wrapper::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover .icon-wrapper::after {
+        opacity: 1;
+    }
+
+    .cta-button {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-button::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .cta-button:hover::after {
+        opacity: 1;
+    }
+    </style>
+</head>
+
+<body class="font-inter bg-white dark:bg-dark-bg text-slate-700 dark:text-dark-text transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full glass-card z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-12">
+                    <a href="{% url 'home' %}" class="text-2xl font-bold text-gradient">OneCampus</a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <button id="theme-toggle" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    {% if user.is_authenticated %}
+                        {% if not hide_dashboard_nav %}
+                            <a href="{% url 'dashboard' %}" class="cta-button px-6 py-2 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">Dashboard</a>
+                        {% endif %}
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="cta-button px-6 py-2 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                Logout
+                            </button>
+                        </form>
+                    {% else %}
+                        {% if hide_login_button %}
+                            <!-- Show Home button instead of Login -->
+                            <a href="{% url 'home' %}" class="cta-button px-6 py-2 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">Home</a>
+                        {% else %}
+                            <!-- Show Login button normally -->
+                            <a href="{% url 'login' %}" class="cta-button px-6 py-2 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">Login</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        // Add event listener
+        themeToggle.addEventListener('click', toggleTheme);
+    </script>
+</body>
+</html>

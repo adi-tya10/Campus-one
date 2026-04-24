@@ -1,0 +1,474 @@
+{% extends 'student/base.html' %}
+
+{% block title %}View Student - {{ student.name }} - OneCampus{% endblock %}
+
+{% block content %}
+    <section class="min-h-screen py-20 bg-slate-50 dark:bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="gradient-border bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+                <div class="p-8 md:p-12">
+                    <h1 class="text-3xl font-bold text-gradient mb-8 text-center">
+                        Student Details - {{ student.name }}
+                    </h1>
+                    
+                    <div class="space-y-8">
+                        <!-- Photo Section -->
+                        {% if student.photo %}
+                            <div class="text-center mb-8">
+                                <div class="inline-block p-1 rounded-full bg-gradient-to-r from-primary to-secondary">
+                                    <img src="{{ student.photo.url }}" alt="{{ student.name }}'s Photo" 
+                                         class="w-32 h-32 rounded-full object-cover bg-white p-1">
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Personal Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Personal Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Name</span>
+                                    <span class="detail-value">{{ student.name }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Roll Number</span>
+                                    <span class="detail-value">{{ student.usn }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Sex</span>
+                                    <span class="detail-value">{{ student.sex }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Aadhar Number</span>
+                                    <span class="detail-value">{{ student.aadhar_no }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Contact Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Mobile</span>
+                                    <span class="detail-value">{{ student.mobile }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Email</span>
+                                    <span class="detail-value">{{ student.email }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Family Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Family Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Father's Name</span>
+                                    <span class="detail-value">{{ student.father_name }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Mother's Name</span>
+                                    <span class="detail-value">{{ student.mother_name }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Father's Mobile</span>
+                                    <span class="detail-value">{{ student.father_mobile }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Mother's Mobile</span>
+                                    <span class="detail-value">{{ student.mother_mobile }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Academic Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Academic Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">10th Marks</span>
+                                    <span class="detail-value">{{ student.sslc_mark }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">12th Marks</span>
+                                    <span class="detail-value">{{ student.puc_mark }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Attendance Percentage</span>
+                                    <span class="detail-value">{{ student.attendance }}%</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Assessment Marks</span>
+                                    <span class="detail-value">{{ student.ia_marks }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">AICTE Points</span>
+                                    <span class="detail-value">{{ student.aicte_points }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Achievement Status</span>
+                                    <span class="detail-value status-badge {{ student.achievement_status|yesno:'status-yes,status-no' }}">
+                                        {{ student.achievement_status|yesno:"Yes,No" }}
+                                    </span>
+                                </div>
+
+                                {% if student.achievement_status and student.achievement_description %}
+                                    <div class="detail-item span-full">
+                                        <span class="detail-label">Achievement Description</span>
+                                        <span class="detail-value">{{ student.achievement_description }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Financial Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Financial Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">College Fee Demand</span>
+                                    <span class="detail-value">₹{{ student.college_fee_demand }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">College Fee Balance</span>
+                                    <span class="detail-value">₹{{ student.college_fee_balance }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Hostel Fee Demand</span>
+                                    <span class="detail-value">₹{{ student.hostel_fee_demand }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Hostel Fee Balance</span>
+                                    <span class="detail-value">₹{{ student.hostel_fee_balance }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Bus Fee Demand</span>
+                                    <span class="detail-value">₹{{ student.bus_fee_demand }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Bus Fee Balance</span>
+                                    <span class="detail-value">₹{{ student.bus_fee_balance }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Scholarship Status</span>
+                                    <span class="detail-value status-badge {{ student.scholarship_status|yesno:'status-yes,status-no' }}">
+                                        {{ student.scholarship_status|yesno:"Yes,No" }}
+                                    </span>
+                                </div>
+                                {% if student.scholarship_status and student.scholarship_name %}
+                                    <div class="detail-item">
+                                        <span class="detail-label">Scholarship Name</span>
+                                        <span class="detail-value">{{ student.scholarship_name }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Accommodation & Other Information -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Additional Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Accommodation</span>
+                                    <span class="detail-value">{{ student.accommodation }}</span>
+                                </div>
+                                {% if student.accommodation == "Travel" and student.travel_description %}
+                                    <div class="detail-item span-full">
+                                        <span class="detail-label">Travel Description</span>
+                                        <span class="detail-value">{{ student.travel_description }}</span>
+                                    </div>
+                                {% endif %}
+
+                                <div class="detail-item">
+                                    <span class="detail-label">Disability</span>
+                                    <span class="detail-value status-badge {{ student.disability|yesno:'status-yes,status-no' }}">
+                                        {{ student.disability|yesno:"Yes,No" }}
+                                    </span>
+                                </div>
+                                {% if student.disability and student.disability_description %}
+                                    <div class="detail-item span-full">
+                                        <span class="detail-label">Disability Description</span>
+                                        <span class="detail-value">{{ student.disability_description }}</span>
+                                    </div>
+                                {% endif %}
+                                {% if student.circulars %}
+                                    <div class="detail-item span-full">
+                                        <span class="detail-label">Circulars</span>
+                                        <span class="detail-value">{{ student.circulars }}</span>
+                                    </div>
+                                {% endif %}
+                                {% if student.parents_visits %}
+                                    <div class="detail-item span-full">
+                                        <span class="detail-label">Parents Visits</span>
+                                        <span class="detail-value">{{ student.parents_visits }}</span>
+                                    </div>
+                                {% endif %}
+                                {% if student.participation_permission %}
+                                    <div class="detail-item span-full">
+                                        <span class="detail-label">Participation Permission</span>
+                                        <span class="detail-value">{{ student.participation_permission }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Documents Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Documents</h2>
+                            <div class="document-grid">
+                                {% if student.semester_card %}
+                                    <div class="document-item">
+                                        <div class="document-icon">📄</div>
+                                        <div>
+                                            <span class="detail-label">Semester Card</span>
+                                            <a href="{{ student.semester_card.url }}" class="document-link" target="_blank">
+                                                View Document
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if student.timetable %}
+                                    <div class="document-item">
+                                        <div class="document-icon">📅</div>
+                                        <div>
+                                            <span class="detail-label">Timetable</span>
+                                            <a href="{{ student.timetable.url }}" class="document-link" target="_blank">
+                                                View Document
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Back Button -->
+                        <div class="text-center pt-8">
+                            <a href="{% url 'dashboard' %}" class="cta-button px-8 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                ← Back to Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Styles -->
+    <style>
+        .gradient-border {
+            border: 1px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(to right, #8B5CF6, #7C3AED) border-box;
+            border-radius: 0.75rem;
+        }
+
+        .dark .gradient-border {
+            background: linear-gradient(#0F172A, #0F172A) padding-box,
+                        linear-gradient(to right, #8B5CF6, #7C3AED) border-box;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #8B5CF6, #7C3AED);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .detail-section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(203, 213, 225, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .detail-section {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: rgba(30, 41, 59, 0.5);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .dark .section-title {
+            color: #A78BFA;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            background: rgba(248, 250, 252, 0.8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(203, 213, 225, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .dark .detail-item {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(51, 65, 85, 0.5);
+        }
+
+        .detail-item:hover {
+            background: rgba(241, 245, 249, 0.9);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .detail-item:hover {
+            background: rgba(51, 65, 85, 0.9);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        .span-full {
+            grid-column: 1 / -1;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: #64748B;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dark .detail-label {
+            color: #94A3B8;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            color: #1E293B;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .dark .detail-value {
+            color: #F1F5F9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-yes {
+            background: rgba(221, 214, 254, 0.2);
+            color: #7C3AED;
+            border: 1px solid #8B5CF6;
+        }
+
+        .dark .status-yes {
+            background: rgba(139, 92, 246, 0.2);
+            color: #C4B5FD;
+        }
+
+        .status-no {
+            background: rgba(254, 226, 226, 0.2);
+            color: #DC2626;
+            border: 1px solid #DC2626;
+        }
+
+        .dark .status-no {
+            background: rgba(220, 38, 38, 0.2);
+            color: #FCA5A5;
+        }
+
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            background: rgba(248, 250, 252, 0.8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(203, 213, 225, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .dark .document-item {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(51, 65, 85, 0.5);
+        }
+
+        .document-item:hover {
+            background: rgba(241, 245, 249, 0.9);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .dark .document-item:hover {
+            background: rgba(51, 65, 85, 0.9);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        .document-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .document-link {
+            color: #8B5CF6;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dark .document-link {
+            color: #A78BFA;
+        }
+
+        .document-link:hover {
+            color: #7C3AED;
+            text-decoration: underline;
+        }
+
+        .dark .document-link:hover {
+            color: #8B5CF6;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .document-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+{% endblock %}

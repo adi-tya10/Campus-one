@@ -1,0 +1,83 @@
+{% extends 'student/base1.html' %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="min-h-screen relative overflow-hidden flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Left Column -->
+                <div class="space-y-10">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-primary/10 text-primary dark:text-primary-dark text-sm font-medium">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Student Management System</span>
+                    </div>
+                    <div class="space-y-6">
+                        <h1 class="text-4xl md:text-5xl font-bold leading-tight text-slate-800 dark:text-slate-200">
+                            Welcome to
+                        </h1>
+                        <div class="text-gradient text-6xl md:text-7xl font-bold leading-tight">
+                            OneCampus
+                        </div>
+                        <p class="text-xl text-slate-600 dark:text-slate-300 max-w-lg">
+                            Your comprehensive solution for managing student records and academic performance
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="{% url 'signup' %}" class="cta-button group px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-primary to-secondary hover:opacity-90 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                            <span class="flex items-center space-x-2">
+                                <span>Get Started</span>
+                                <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="relative">
+                    <div class="gradient-border">
+                        <div class="p-8">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="feature-card rounded-lg p-6">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="icon-wrapper p-2.5 rounded-lg bg-primary/10">
+                                            <i class="fas fa-user-graduate text-lg text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-medium">Student Details</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">Manage student information including USN, name, phone, and email</p>
+                                </div>
+                                <div class="feature-card rounded-lg p-6">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="icon-wrapper p-2.5 rounded-lg bg-primary/10">
+                                            <i class="fas fa-chart-line text-lg text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-medium">Assignment Marks</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">Track and manage assignment scores for each student</p>
+                                </div>
+                                <div class="feature-card rounded-lg p-6">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="icon-wrapper p-2.5 rounded-lg bg-primary/10">
+                                            <i class="fas fa-tasks text-lg text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-medium">Test Scores</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">Record and monitor test performance across subjects</p>
+                                </div>
+                                <div class="feature-card rounded-lg p-6">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="icon-wrapper p-2.5 rounded-lg bg-primary/10">
+                                            <i class="fas fa-file-alt text-lg text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-medium">Exam Results</span>
+                                    </div>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">Manage semester exam scores and calculate final grades</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

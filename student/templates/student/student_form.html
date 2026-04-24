@@ -1,0 +1,533 @@
+{% extends 'student/base.html' %}
+
+{% block title %}{% if form.instance.id %}Edit Student{% else %}Create Student{% endif %} - OneCampus{% endblock %}
+
+{% block content %}
+    <section class="min-h-screen py-20 bg-slate-50 dark:bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="gradient-border bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+                <div class="p-8 md:p-12">
+                    <h1 class="text-3xl font-bold text-gradient mb-8 text-center">
+                        {% if form.instance.id %}Edit Student{% else %}Create New Student{% endif %}
+                    </h1>
+                    
+                    <form method="post" enctype="multipart/form-data" class="space-y-8">
+                        {% csrf_token %}
+                        
+                        <!-- Photo Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Photo</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item span-full">
+                                    {{ form.photo }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Personal Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.name.id_for_label }}" class="detail-label">Name</label>
+                                    {{ form.name }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.usn.id_for_label }}" class="detail-label">Roll Number</label>
+                                    {{ form.usn }}
+                                </div>
+                                <div class="detail-item">
+                                    <label class="detail-label">Sex</label>
+                                    <div class="radio-group flex gap-4 mt-2">
+                                        <label class="radio-option inline-flex items-center">
+                                            <input type="radio" name="sex" value="Male" class="h-4 w-4 text-primary focus:ring-primary" 
+                                                   {% if form.sex.value == 'M' %}checked{% endif %}>
+                                            <span class="ml-2 dark:text-slate-300">Male</span>
+                                        </label>
+                                        <label class="radio-option inline-flex items-center">
+                                            <input type="radio" name="sex" value="Female" class="h-4 w-4 text-primary focus:ring-primary"
+                                                   {% if form.sex.value == 'F' %}checked{% endif %}>
+                                            <span class="ml-2 dark:text-slate-300">Female</span>
+                                        </label>
+                                        <label class="radio-option inline-flex items-center">
+                                            <input type="radio" name="sex" value="Other" class="h-4 w-4 text-primary focus:ring-primary"
+                                                   {% if form.sex.value == 'O' %}checked{% endif %}>
+                                            <span class="ml-2 dark:text-slate-300">Other</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.aadhar_no.id_for_label }}" class="detail-label">Aadhar Number</label>
+                                    {{ form.aadhar_no }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Contact Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.mobile.id_for_label }}" class="detail-label">Mobile</label>
+                                    {{ form.mobile }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.email.id_for_label }}" class="detail-label">Email</label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Family Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Family Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.father_name.id_for_label }}" class="detail-label">Father's Name</label>
+                                    {{ form.father_name }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.mother_name.id_for_label }}" class="detail-label">Mother's Name</label>
+                                    {{ form.mother_name }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.father_mobile.id_for_label }}" class="detail-label">Father's Mobile</label>
+                                    {{ form.father_mobile }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.mother_mobile.id_for_label }}" class="detail-label">Mother's Mobile</label>
+                                    {{ form.mother_mobile }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Academic Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Academic Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.sslc_mark.id_for_label }}" class="detail-label">10th Marks</label>
+                                    {{ form.sslc_mark }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.puc_mark.id_for_label }}" class="detail-label">12th Marks</label>
+                                    {{ form.puc_mark }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.attendance.id_for_label }}" class="detail-label">Attendance Percentage</label>
+                                    {{ form.attendance }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.ia_marks.id_for_label }}" class="detail-label">Assessment Marks</label>
+                                    {{ form.ia_marks }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.aicte_points.id_for_label }}" class="detail-label">AICTE Points</label>
+                                    {{ form.aicte_points }}
+                                </div>
+                                <div class="detail-item">
+                                    <div class="flex items-center">
+                                        {{ form.achievement_status }}
+                                        <label for="{{ form.achievement_status.id_for_label }}" class="detail-label ml-2">Has Achievements</label>
+                                    </div>
+                                </div>
+                                <div class="detail-item span-full" id="achievementDescriptionContainer" style="display: none;">
+                                    <label for="{{ form.achievement_description.id_for_label }}" class="detail-label">Achievement Description</label>
+                                    <textarea name="achievement_description" id="id_achievement_description" class="w-full p-3 border rounded-lg dark:bg-slate-700 dark:border-slate-600">{{ form.achievement_description.value|default_if_none:'' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financial Information Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Financial Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.college_fee_demand.id_for_label }}" class="detail-label">College Fee Demand</label>
+                                    {{ form.college_fee_demand }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.college_fee_balance.id_for_label }}" class="detail-label">College Fee Balance</label>
+                                    {{ form.college_fee_balance }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.hostel_fee_demand.id_for_label }}" class="detail-label">Hostel Fee Demand</label>
+                                    {{ form.hostel_fee_demand }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.hostel_fee_balance.id_for_label }}" class="detail-label">Hostel Fee Balance</label>
+                                    {{ form.hostel_fee_balance }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.bus_fee_demand.id_for_label }}" class="detail-label">Bus Fee Demand</label>
+                                    {{ form.bus_fee_demand }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.bus_fee_balance.id_for_label }}" class="detail-label">Bus Fee Balance</label>
+                                    {{ form.bus_fee_balance }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.scholarship_status.id_for_label }}" class="detail-label">Scholarship Status</label>
+                                    {{ form.scholarship_status }}
+                                </div>
+                                <div class="detail-item" id="scholarshipNameContainer" style="display: none;">
+                                    <label for="{{ form.scholarship_name.id_for_label }}" class="detail-label">Scholarship Name</label>
+                                    {{ form.scholarship_name }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accommodation & Other Information -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Additional Information</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.accommodation.id_for_label }}" class="detail-label">Accommodation</label>
+                                    {{ form.accommodation }}
+                                </div>
+
+                                <div class="detail-item span-full" id="travelDescriptionContainer" style="display: none;">
+                                    <label for="{{ form.travel_description.id_for_label }}" class="detail-label">Travel Description</label>
+                                    {{ form.travel_description }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.disability.id_for_label }}" class="detail-label">Disability</label>
+                                    {{ form.disability }}
+                                </div>
+                                <div class="detail-item span-full" id="disabilityDescriptionContainer" style="display: none;">
+                                    <label for="{{ form.disability_description.id_for_label }}" class="detail-label">Disability Description</label>
+                                    {{ form.disability_description }}
+                                </div>
+                                <div class="detail-item span-full">
+                                    <label for="{{ form.circulars.id_for_label }}" class="detail-label">Circulars</label>
+                                    {{ form.circulars }}
+                                </div>
+                                <div class="detail-item span-full">
+                                    <label for="{{ form.parents_visits.id_for_label }}" class="detail-label">Parents Visits</label>
+                                    {{ form.parents_visits }}
+                                </div>
+                                <div class="detail-item span-full">
+                                    <label for="{{ form.participation_permission.id_for_label }}" class="detail-label">Participation Permission</label>
+                                    {{ form.participation_permission }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Documents Section -->
+                        <div class="detail-section">
+                            <h2 class="section-title">Documents</h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label for="{{ form.semester_card.id_for_label }}" class="detail-label">Semester Card</label>
+                                    {{ form.semester_card }}
+                                </div>
+                                <div class="detail-item">
+                                    <label for="{{ form.timetable.id_for_label }}" class="detail-label">Timetable</label>
+                                    {{ form.timetable }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="flex justify-between pt-8">
+                            <a href="{% url 'dashboard' %}" class="cta-button px-8 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                ← Back to Dashboard
+                            </a>
+                            <button type="submit" class="cta-button px-8 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                {% if form.instance.id %}Update Student{% else %}Create Student{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Styles for Form Fields -->
+    <style>
+        /* Reuse all the styles from view_student.html */
+        .gradient-border {
+            border: 1px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(to right, #8B5CF6, #7C3AED) border-box;
+            border-radius: 0.75rem;
+        }
+
+        .dark .gradient-border {
+            background: linear-gradient(#0F172A, #0F172A) padding-box,
+                        linear-gradient(to right, #8B5CF6, #7C3AED) border-box;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #8B5CF6, #7C3AED);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .detail-section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(203, 213, 225, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .detail-section {
+            background: rgba(15, 23, 42, 0.95);
+            border-color: rgba(30, 41, 59, 0.5);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #8B5CF6;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .dark .section-title {
+            color: #A78BFA;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            background: rgba(248, 250, 252, 0.8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(203, 213, 225, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .dark .detail-item {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(51, 65, 85, 0.5);
+        }
+
+        .detail-item:hover {
+            background: rgba(241, 245, 249, 0.9);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .detail-item:hover {
+            background: rgba(51, 65, 85, 0.9);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        .span-full {
+            grid-column: 1 / -1;
+        }
+
+        .detail-label {
+            font-weight: 500;
+            color: #64748B;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dark .detail-label {
+            color: #94A3B8;
+        }
+
+        /* Form field specific styles */
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1E293B;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .dark input[type="text"],
+        .dark input[type="email"],
+        .dark input[type="number"],
+        .dark input[type="file"],
+        .dark select,
+        .dark textarea {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(139, 92, 246, 0.3);
+            color: #F1F5F9;
+        }
+
+        .dark input[type="text"]:focus,
+        .dark input[type="email"]:focus,
+        .dark input[type="number"]:focus,
+        .dark select:focus,
+        .dark textarea:focus {
+            border-color: #7C3AED;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Radio Button Styles */
+        .radio-group {
+            margin-top: 0.25rem;
+        }
+
+        .radio-option {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover {
+            opacity: 0.9;
+        }
+
+        input[type="radio"] {
+            accent-color: #8B5CF6;
+        }
+
+        .dark input[type="radio"] {
+            accent-color: #7C3AED;
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #8B5CF6;
+            margin-top: 0.5rem;
+        }
+
+        /* Error messages */
+        .errorlist {
+            color: #EF4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .dark .errorlist {
+            color: #FCA5A5;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.125rem;
+            }
+            
+            .flex.justify-between {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .flex.justify-between a,
+            .flex.justify-between button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script>
+        // Show/hide achievement description based on checkbox status
+        document.addEventListener('DOMContentLoaded', function() {
+            const achievementCheckbox = document.querySelector('input[name="achievement_status"]');
+            const achievementDescriptionContainer = document.getElementById('achievementDescriptionContainer');
+            
+            // Initial check
+            toggleAchievementDescription(achievementCheckbox.checked);
+            
+            // Add event listener for changes
+            achievementCheckbox.addEventListener('change', function() {
+                toggleAchievementDescription(this.checked);
+            });
+            
+            function toggleAchievementDescription(isChecked) {
+                if (isChecked) {
+                    achievementDescriptionContainer.style.display = 'block';
+                } else {
+                    achievementDescriptionContainer.style.display = 'none';
+                }
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const accommodationField = document.getElementById("id_accommodation");
+            const travelDescContainer = document.getElementById("travelDescriptionContainer");
+
+            function toggleTravelDescription() {
+                if (accommodationField.value === "Travel") {
+                    travelDescContainer.style.display = "block";
+                } else {
+                    travelDescContainer.style.display = "none";
+                }
+            }
+
+            toggleTravelDescription(); // run on load
+            accommodationField.addEventListener("change", toggleTravelDescription);
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const accommodationField = document.getElementById("id_accommodation");
+            const travelDescContainer = document.getElementById("travelDescriptionContainer");
+
+            const scholarshipStatus = document.getElementById("id_scholarship_status");
+            const scholarshipContainer = document.getElementById("scholarshipNameContainer");
+
+            const disabilityCheckbox = document.getElementById("id_disability");
+            const disabilityContainer = document.getElementById("disabilityDescriptionContainer");
+
+            function toggleTravelDescription() {
+                travelDescContainer.style.display = (accommodationField.value === "Travel") ? "block" : "none";
+            }
+
+            function toggleScholarship() {
+                scholarshipContainer.style.display = scholarshipStatus.checked ? "block" : "none";
+            }
+
+            function toggleDisability() {
+                disabilityContainer.style.display = disabilityCheckbox.checked ? "block" : "none";
+            }
+
+            // Initial run
+            toggleTravelDescription();
+            toggleScholarship();
+            toggleDisability();
+
+            // Event listeners
+            accommodationField.addEventListener("change", toggleTravelDescription);
+            scholarshipStatus.addEventListener("change", toggleScholarship);
+            disabilityCheckbox.addEventListener("change", toggleDisability);
+        });
+
+    </script>
+{% endblock %}
